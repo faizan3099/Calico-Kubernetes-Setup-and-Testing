@@ -228,3 +228,8 @@ cilium connectivity test
 
 kubectl get pods --all-namespaces -o wide
 # You should see cilium-* pods in kube-system and CoreDNS running/Ready.
+
+
+
+kubeadm join 192.168.1.103:6443 --token g2urew.u4zsu80oyk5mtj5q \
+	--discovery-token-ca-cert-hash sha256:9c214aae3baea0a0ff017410ba32fd1fec40525a039604e494785142f42acb36
