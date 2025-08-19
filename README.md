@@ -204,3 +204,27 @@ Always use calico.yaml manifest
 Use persistent sysctl and module configs
 Start with 100M for testing
 
+
+
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64; [ "$(uname -m)" = "aarch64" ] && CLI_ARCH=arm64
+curl -L --fail --remote-name-all \
+  https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+
+
+# Pin to the current stable if you want reproducibility:
+cilium install --version 1.18.1
+# (Or just: cilium install)
+
+
+cilium status --wait
+# Optional, but great sanity test:
+cilium connectivity test
+
+
+
+kubectl get pods --all-namespaces -o wide
+# You should see cilium-* pods in kube-system and CoreDNS running/Ready.
