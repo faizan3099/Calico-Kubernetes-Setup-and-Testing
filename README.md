@@ -227,4 +227,4 @@ cilium connectivity test
 
 
 kubectl get pods --all-namespaces -o wide
-# You should see cilium-* pods in kube-system and CoreDNS running/Ready.
+You should see cilium-* pods in kube-system and CoreDNS running/Ready.
